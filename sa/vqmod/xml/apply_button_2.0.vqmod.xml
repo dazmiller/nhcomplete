@@ -1,0 +1,109 @@
+<modification>
+	<id><![CDATA[Apply Button]]></id>
+	<version><![CDATA[2.0.6]]></version>
+	<vqmver><![CDATA[2.5.1]]></vqmver>
+	<author><![CDATA[The Krotek]]></author>
+	<link><![CDATA[http://thekrotek.com]]></link>
+	
+	<!-- Admin: Setting -->
+
+	<file name="admin/model/setting/setting.php">
+		<operation error="skip">
+			<search position="after"><![CDATA[ModelSettingSetting extends Model {]]></search>
+			<add><![CDATA[
+
+			public function getLastInsertID($code)
+			{
+				$query = $this->db->query("SELECT ".$code."_id AS id FROM `".DB_PREFIX.$code."` ORDER BY ".$code."_id DESC LIMIT 1");
+				$id = $query->row['id'];
+				return $id;
+			}
+			
+			]]></add>
+		</operation>
+	</file>
+		
+	<!-- Admin: Controllers -->
+	
+	<file path="admin/controller/" name="catalog/*.php,customer/*.php,design/*.php,localisation/*.php,marketing/*.php,sale/*.php,user/*.php,setting/*.php">
+		<operation error="skip">
+			<search position="before"><![CDATA[$this->response->redirect($this->url->link(]]></search>
+			<add><![CDATA[
+
+			if (!isset($this->request->post['selected']) && isset($this->request->get['route']) && isset($this->request->post['apply'])) {
+				$get = explode("/", $this->request->get['route']);
+				$folder = $get[0];
+				$file = $get[1];
+				
+				if ($file == 'user_permission') $table = 'user_group';
+				else $table = $file;
+
+				$this->load->model('setting/setting');
+				$last_id = $this->model_setting_setting->getLastInsertID($table);
+
+				if ($file == 'setting') {
+					$route = 'setting/store';
+					$editroute = 'setting/setting';
+				} else {
+					$route = $folder.'/'.$file;
+					$editroute = $folder.'/'.$file.'/edit';
+				}
+				
+				if (!isset($url)) $url = "";
+
+				if (($file != 'setting') && (isset($this->request->get[$table.'_id']) || isset($last_id))) {
+					$url .= '&'.$table.'_id='.(isset($this->request->get[$table.'_id']) ? $this->request->get[$table.'_id'] : $last_id);
+				}
+
+				if ($this->request->post['apply']) {
+					$this->response->redirect($this->url->link($editroute, 'token='.$this->session->data['token'].$url, 'SSL'));
+				}
+			}
+			
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="before"><![CDATA[$data['heading_title'] = $this->language->get('heading_title');]]></search>
+			<add><![CDATA[
+
+			$data['button_apply'] = $this->language->get('button_apply');
+			
+			]]></add>
+		</operation>
+	</file>
+	
+	<!-- Admin: Templates -->
+
+	<file path="admin/view/template/" name="*/*_form.tpl,setting/setting.tpl">
+		<operation error="skip">
+			<search position="after"><![CDATA[<i class="fa fa-save"></i></button>]]></search>
+			<add><![CDATA[
+			
+			<button onclick="$('#content form #apply').attr('value', '1'); $('#' + $('#content form').attr('id')).submit();" data-toggle="tooltip" title="<?php echo $button_apply; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
+			
+			]]></add>
+		</operation>	
+		<operation error="skip">
+			<search position="replace" index="1"><![CDATA[</form>]]></search>
+			<add><![CDATA[
+					
+			<input type="hidden" name="apply" id="apply" value="0"></form>
+			
+			]]></add>
+		</operation>
+	</file>
+	
+	<!-- Admin: Language -->
+	
+	<file name="admin/language/*/*.php">
+		<operation error="skip">
+			<search position="after"><![CDATA[<?php]]></search>
+			<add><![CDATA[
+			
+			$_['button_apply'] = "Apply";
+			
+			]]></add>
+		</operation>		
+	</file>
+	
+</modification>

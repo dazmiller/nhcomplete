@@ -1,0 +1,227 @@
+
+.maskedfields *
+{
+    box-sizing: border-box;
+}
+
+.maskedfields .item-row
+{
+    clear: left;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.maskedfields .item-inputs
+{
+    float: left;
+}
+
+.maskedfields .item-inputs input,
+.maskedfields .item-inputs select
+{
+    margin: 0;
+    float: left;
+    margin-right: 5px;  
+    width: auto;
+}
+
+.maskedfields .item-enabled
+{
+    float: left;
+}
+
+.maskedfields .item-enabled input[type="checkbox"]
+{
+    margin: 0;
+    float: left;
+    height: 35px;
+    margin-right: 5px;
+}
+
+.maskedfields .item-enabled label
+{
+    margin: 0;
+    float: left;
+    line-height: 35px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.maskedfields .item-buttons
+{
+    float: left;
+}
+
+.maskedfields .item-buttons a
+{
+    float: left;
+    margin-right: 5px;
+}
+
+/* Generic styles */
+
+body *
+{
+    box-sizing: border-box;
+}
+
+.clearfix
+{
+	clear: both;
+}
+
+.version
+{
+	display: block;
+    line-height: 16px;
+    padding-left: 20px;
+}
+
+.version.latest
+{
+	color: #479401;
+}
+
+.version.update
+{
+	color: #ca3510;
+}
+
+table.form
+{
+    margin-bottom: 0;
+}
+    
+.copyright
+{
+	background: #1e91cf;
+	color: #ffffff;
+	font-size: 125%;
+	padding: 10px;
+	border-color: #1978ab;
+	border-radius: 3px;
+	margin-top: 20px;
+}
+
+.copyright a
+{
+	color: #fffc00;
+}
+
+td .checkbox-select
+{
+	margin-top: 10px;
+}
+
+.checkbox-select a
+{
+	cursor: pointer;
+}
+
+.radio-inline input[type='radio']
+{
+    height: 100%;
+    line-height: 24px;
+    float: left;
+    margin-right: 5px;
+    margin-top: 1px;
+}
+
+.form-horizontal .control-label
+{
+    text-align: left;
+    padding-left: 20px;
+    font-size: 110%;
+    font-weight: normal;
+}
+
+.settings-title
+{
+    margin: 20px 0;
+}
+
+.scrollbox,
+td select,
+td input[type="text"]
+{
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    height: auto;
+    width: 250px !important;
+    margin: 0;
+    padding: 5px !important;
+    text-align: left;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+input[type="radio"]
+{
+    margin-right: 5px !important;
+}
+
+.form-group input[type="checkbox"]
+{
+    margin: 12px 0 0 0;
+    padding: 0;
+}
+
+.form-group .well input[type="checkbox"]
+{
+    float: left;
+    margin: 2px 0 0 -20px;
+}
+
+.scrollbox > div
+{
+    overflow: hidden;
+}
+
+.scrollbox
+{
+	height: 150px;
+}
+
+.table thead td span[data-toggle="tooltip"]::after,
+label.control-label span::after
+{
+    cursor: pointer;
+}
+
+.input-text
+{
+    display: block;
+    float: left;
+    line-height: 100%;
+    padding-top: 9px;
+}
+
+#input-cron-link span
+{
+    display: block;
+    line-height: 125%;
+    cursor: pointer;
+}
+
+#input-cron-link .cron-wget
+{
+    opacity: 0.4;
+}
+
+#input-cron-link .cron-wget:hover
+{
+    opacity: 1;
+}
+
+.autocomplete .fa-minus-circle
+{
+    cursor: pointer;
+}
+
+.cell-inner .placeholder .content #toolbar-main
+{
+	border: none
+	float: none
+	text-decoration-color: #000000;
+}

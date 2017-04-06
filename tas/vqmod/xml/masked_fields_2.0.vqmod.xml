@@ -1,0 +1,67 @@
+<modification>
+	<id>Masked Fields</id>
+	<version>2.1.0</version>
+	<vqmver>2.1.5</vqmver>
+	<author>The Krotek</author>
+	
+	<!-- Catalog: Header -->
+	
+	<file name="catalog/controller/common/header.php">
+		<operation>
+			<search position="before"><![CDATA[$data['name']]]></search>
+			<add><![CDATA[
+			
+			$data['maskedfields_status'] = $this->config->get('maskedfields_status');
+			
+			if ($data['maskedfields_status']) {
+				$data['mask_rules'] = $this->config->get('maskedfields_masks');
+				$data['mask_definitions'] = $this->config->get('maskedfields_definitions');
+			
+				if ($this->config->get('maskedfields_placeholder')) {
+					$data['mask_placeholder'] = $this->config->get('maskedfields_placeholder');
+				} else {
+					$data['mask_placeholder'] = "_";
+				}
+			}
+						
+			]]></add>
+		</operation>
+	</file>
+		
+	<file name="catalog/view/theme/*/template/common/header.tpl">
+		<operation>
+			<search position="before"><![CDATA[</head>]]></search>
+			<add><![CDATA[
+			
+			<?php if ($maskedfields_status && isset($mask_rules) && $mask_rules) { ?>
+				<script type="text/javascript" src="catalog/view/javascript/maskedfields.js"></script>
+				<script type="text/javascript">
+			
+				<?php if ($mask_definitions) { ?>
+					jQuery(function($){
+						<?php foreach ($mask_definitions as $definition) { ?>
+   							$.mask.definitions["<?php echo $definition['placeholder']; ?>"] = "<?php echo $definition['rule']; ?>";
+   						<?php } ?>
+   					});
+				<?php } ?>
+			
+				$(document).ready(function(){
+					<?php foreach ($mask_rules as $mask) { ?>
+						<?php if ($mask['field'] && $mask['mask'] && isset($mask['enabled'])) { ?>
+							$("body").on('focus', "input[name='<?php echo $mask['field']; ?>']", function() {
+								$(this).mask("<?php echo $mask['mask']; ?>", {
+									placeholder: "<?php echo $mask_placeholder; ?>"
+								});
+							});
+						<?php } ?>
+					<?php } ?>
+				});
+			
+				</script>
+			<?php } ?>
+						
+			]]></add>
+		</operation>
+	</file>
+	
+</modification>

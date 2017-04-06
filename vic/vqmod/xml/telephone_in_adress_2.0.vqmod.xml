@@ -1,0 +1,141 @@
+<modification>
+	<id><![CDATA[Telephone in Address]]></id>
+	<version><![CDATA[2.0.2]]></version>
+	<vqmver><![CDATA[2.1.5]]></vqmver>
+	<author><![CDATA[The Krotek]]></author>
+	
+	<file name="admin/controller/sale/order.php">
+		<operation>
+			<search position="after"><![CDATA['{zone_code}',]]></search>
+			<add><![CDATA[
+			
+			'{telephone}',
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['zone_code' => $order_info['shipping_zone_code'],]]></search>
+			<add><![CDATA[
+			
+			'telephone' => (!empty($order_info['telephone']) ? $order_info['telephone'] : ""),
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['zone_code' => $order_info['payment_zone_code'],]]></search>
+			<add><![CDATA[
+			
+			'telephone' => (!empty($order_info['telephone']) ? $order_info['telephone'] : ""),
+			
+			]]></add>
+		</operation>		
+	</file>
+	
+	<file name="admin/language/english/localisation/country.php">
+		<operation>
+			<search position="replace"><![CDATA[Postcode = {postcode}<br />]]></search>
+			<add><![CDATA[Telephone = {telephone}<br />Postcode = {postcode}<br />]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/account/address.php">
+		<operation>
+			<search position="before"><![CDATA[$replace = array(]]></search>
+			<add><![CDATA[
+			
+			$this->load->model('account/customer');
+			$customer = $this->model_account_customer->getCustomer($this->customer->getId());
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['{zone_code}',]]></search>
+			<add><![CDATA[
+			
+			'{telephone}',
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['zone_code' => $result['zone_code'],]]></search>
+			<add><![CDATA[
+			
+			'telephone' => (!empty($customer['telephone']) ? $customer['telephone'] : ""),
+			
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/account/order.php">
+		<operation>
+			<search position="before"><![CDATA[$replace = array(]]></search>
+			<add><![CDATA[
+			
+			$this->load->model('account/customer');
+			$customer = $this->model_account_customer->getCustomer($order_info['customer_id']);
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['{zone_code}',]]></search>
+			<add><![CDATA[
+			
+			'{telephone}',
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['zone_code' => $order_info['shipping_zone_code'],]]></search>
+			<add><![CDATA[
+			
+			'telephone' => (!empty($customer['telephone']) ? $customer['telephone'] : ""),
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['zone_code' => $order_info['payment_zone_code'],]]></search>
+			<add><![CDATA[
+			
+			'telephone' => (!empty($customer['telephone']) ? $customer['telephone'] : ""),
+			
+			]]></add>
+		</operation>		
+	</file>
+	
+	<file name="catalog/model/checkout/order.php">
+		<operation>
+			<search position="before"><![CDATA[$replace = array(]]></search>
+			<add><![CDATA[
+			
+			$this->load->model('account/customer');
+			$customer = $this->model_account_customer->getCustomer($order_info['customer_id']);
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['{zone_code}',]]></search>
+			<add><![CDATA[
+			
+			'{telephone}',
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['zone_code' => $order_info['shipping_zone_code'],]]></search>
+			<add><![CDATA[
+			
+			'telephone' => (!empty($customer['telephone']) ? $customer['telephone'] : ""),
+			
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['zone_code' => $order_info['payment_zone_code'],]]></search>
+			<add><![CDATA[
+			
+			'telephone' => (!empty($customer['telephone']) ? $customer['telephone'] : ""),
+			
+			]]></add>
+		</operation>		
+	</file>
+
+</modification>
